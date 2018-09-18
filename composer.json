@@ -1,5 +1,5 @@
 {
-    "name": "sylius/sylius-pickup-point-plugin",
+    "name": "setono/sylius-pickup-point-plugin",
     "type": "sylius-plugin",
     "description": "Plugin that displays a map with pickup points in the shipping method selection process",
     "license": "MIT",
