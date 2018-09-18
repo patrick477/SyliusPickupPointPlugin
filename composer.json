@@ -1,7 +1,7 @@
 {
-    "name": "sylius/plugin-skeleton",
+    "name": "sylius/sylius-pickup-point-plugin",
     "type": "sylius-plugin",
-    "description": "Acme example plugin for Sylius.",
+    "description": "Plugin that displays a map with pickup points in the shipping method selection process",
     "license": "MIT",
     "require": {
         "php": "^7.1",
@@ -32,8 +32,8 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Acme\\SyliusExamplePlugin\\": "src/",
-            "Tests\\Acme\\SyliusExamplePlugin\\": "tests/"
+            "Setono\\SyliusPickupPointPlugin\\": "src/",
+            "Tests\\Setono\\SyliusPickupPointPlugin\\": "tests/"
         }
     },
     "autoload-dev": {
@@ -41,10 +41,16 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.2-dev"
+            "dev-master": "1.0-dev"
         }
     },
     "config": {
         "bin-dir": "bin"
+    },
+    "scripts": {
+        "test": "./bin/phpunit",
+        "check-style": "./bin/ecs check src",
+        "fix-style": "./bin/ecs check src --fix",
+        "analyse": "./bin/phpstan.phar analyse -c phpstan.neon -l max src/"
     }
 }
