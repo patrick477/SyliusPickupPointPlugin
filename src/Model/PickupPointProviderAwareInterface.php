@@ -16,7 +16,9 @@ interface PickupPointProviderAwareInterface
     /**
      * Returns the class name of the pickup provider
      *
+     * Returns null if no pickup point provider is available
+     *
      * @return string
      */
-    public function getPickupPointProvider(): string;
+    public function getPickupPointProvider(): ?string;
 }

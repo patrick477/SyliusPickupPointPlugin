@@ -1,6 +1,6 @@
 setono_sylius_pickup_point_plugin_shop_ajax_find_pickup_points:
-    path: /ajax/pickup-points/find
-    methods: [POST]
+    path: /ajax/pickup-points/find/{provider}
+    methods: [GET]
     defaults:
         _controller: setono.sylius_pickup_point_plugin.controller.action.find_pickup_points
         _format: json

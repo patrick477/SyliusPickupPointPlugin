@@ -36,6 +36,13 @@ interface PickupPointInterface
     public function getZipCode(): string;
 
     /**
+     * Returns the city
+     *
+     * @return string
+     */
+    public function getCity(): string;
+
+    /**
      * Returns the country
      *
      * @return string

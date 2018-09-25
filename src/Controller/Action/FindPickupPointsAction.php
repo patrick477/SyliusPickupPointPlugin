@@ -59,32 +59,29 @@ final class FindPickupPointsAction
         $this->shippingMethodRepository = $shippingMethodRepository;
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request, string $provider): Response
     {
         /** @var OrderInterface $order */
         $order = $this->cartContext->getCart();
-        if (null === $order) {
-            throw new NotFoundHttpException();
+
+        if (!$this->isCsrfTokenValid((string) $order->getId(), $request->get('_csrf_token'))) {
+            throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid CSRF token.');
         }
 
-        if (!$this->isCsrfTokenValid((string) $order->getId(), $request->request->get('_csrf_token'))) {
-            throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid csrf token.');
-        }
+//        $shippingMethodCode = $request->request->getInt('shippingMethodCode');
+//        if ($shippingMethodCode <= 0) {
+//            throw new NotFoundHttpException();
+//        }
+//
+//        /** @var PickupPointProviderAwareInterface|null $shippingMethod */
+//        $shippingMethod = $this->shippingMethodRepository->findOneBy([
+//            'code' => $shippingMethodCode,
+//        ]);
+//        if (null === $shippingMethod || !($shippingMethod instanceof PickupPointProviderAwareInterface) || !$shippingMethod->hasPickupPointProvider()) {
+//            throw new NotFoundHttpException();
+//        }
 
-        $shippingMethodCode = $request->request->getInt('shippingMethodCode');
-        if ($shippingMethodCode <= 0) {
-            throw new NotFoundHttpException();
-        }
-
-        /** @var PickupPointProviderAwareInterface $shippingMethod */
-        $shippingMethod = $this->shippingMethodRepository->findOneBy([
-            'code' => $shippingMethodCode
-        ]);
-        if (null === $shippingMethod || !($shippingMethod instanceof PickupPointProviderAwareInterface) || !$shippingMethod->hasPickupPointProvider()) {
-            throw new NotFoundHttpException();
-        }
-
-        $provider = $this->providerManager->findByClassName($shippingMethod->getPickupPointProvider());
+        $provider = $this->providerManager->findByCode($provider);
         if (null === $provider) {
             throw new NotFoundHttpException();
         }

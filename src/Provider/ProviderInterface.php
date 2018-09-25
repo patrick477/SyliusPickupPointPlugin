@@ -10,6 +10,13 @@ use Sylius\Component\Core\Model\OrderInterface;
 interface ProviderInterface
 {
     /**
+     * A unique code identifying this provider
+     *
+     * @return string
+     */
+    public function getCode(): string;
+
+    /**
      * Will return the name of this provider
      *
      * @return string

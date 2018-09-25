@@ -25,6 +25,14 @@ const config = [
   argv.nodeModulesPath || '../../../../../../../tests/Application/node_modules',
 ];
 
+const setonoPickupPointConfig = [
+    '--rootPath',
+    argv.rootPath || 'tests/Application/web/assets',
+    '--nodeModulesPath',
+    argv.nodeModulesPath || 'tests/Application/node_modules',
+];
+
+// admin assets
 export const buildAdmin = function buildAdmin() {
   return gulp.src('../../vendor/sylius/sylius/src/Sylius/Bundle/AdminBundle/gulpfile.babel.js', { read: false })
     .pipe(chug({ args: config }));
@@ -37,6 +45,7 @@ export const watchAdmin = function watchAdmin() {
 };
 watchAdmin.description = 'Watch admin asset sources and rebuild on changes.';
 
+// shop assets
 export const buildShop = function buildShop() {
   return gulp.src('../../vendor/sylius/sylius/src/Sylius/Bundle/ShopBundle/gulpfile.babel.js', { read: false })
     .pipe(chug({ args: config }));
@@ -49,12 +58,27 @@ export const watchShop = function watchShop() {
 };
 watchShop.description = 'Watch shop asset sources and rebuild on changes.';
 
-export const build = gulp.parallel(buildAdmin, buildShop);
+// setono pickup point plugin assets
+export const buildSetonoPickupPoint = function buildSetonoPickupPoint() {
+    return gulp.src('../../gulpfile.babel.js', { read: false })
+        .pipe(chug({ args: setonoPickupPointConfig }));
+};
+buildSetonoPickupPoint.description = 'Build SetonoPickupPointPlugin assets.';
+
+export const watchSetonoPickupPoint = function watchSetonoPickupPoint() {
+    return gulp.src('../../gulpfile.babel.js', { read: false })
+        .pipe(chug({ args: setonoPickupPointConfig, tasks: 'watch' }));
+};
+watchSetonoPickupPoint.description = 'Watch SetonoPickupPointPlugin asset sources and rebuild on changes.';
+
+export const build = gulp.parallel(buildAdmin, buildShop, buildSetonoPickupPoint);
 build.description = 'Build assets.';
 
 gulp.task('admin', buildAdmin);
 gulp.task('admin-watch', watchAdmin);
 gulp.task('shop', buildShop);
 gulp.task('shop-watch', watchShop);
+gulp.task('setono-pickup-point', buildSetonoPickupPoint);
+gulp.task('setono-pickup-point-watch', watchSetonoPickupPoint);
 
 export default build;

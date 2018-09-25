@@ -22,6 +22,14 @@ trait ShippingMethodTrait
     }
 
     /**
+     * @param string|null $pickupPointProvider
+     */
+    public function setPickupPointProvider(?string $pickupPointProvider): void
+    {
+        $this->pickupPointProvider = $pickupPointProvider;
+    }
+
+    /**
      * Returns the class name of the pickup provider
      *
      * @return string|null

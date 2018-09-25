@@ -29,6 +29,11 @@ class PickupPoint implements PickupPointInterface
     /**
      * @var string
      */
+    protected $city;
+
+    /**
+     * @var string
+     */
     protected $country;
 
     /**
@@ -41,12 +46,13 @@ class PickupPoint implements PickupPointInterface
      */
     protected $longitude;
 
-    public function __construct(string $id, string $name, string $address, string $zipCode, string $country, string $latitude, string $longitude)
+    public function __construct(string $id, string $name, string $address, string $zipCode, string $city, string $country, string $latitude, string $longitude)
     {
         $this->id = $id;
         $this->name = $name;
         $this->address = $address;
         $this->zipCode = $zipCode;
+        $this->city = $city;
         $this->country = $country;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
@@ -70,6 +76,11 @@ class PickupPoint implements PickupPointInterface
     public function getZipCode(): string
     {
         return $this->zipCode;
+    }
+
+    public function getCity(): string
+    {
+        return $this->city;
     }
 
     public function getCountry(): string
