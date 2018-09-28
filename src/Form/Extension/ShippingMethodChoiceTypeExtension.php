@@ -9,6 +9,8 @@ use Setono\SyliusPickupPointPlugin\Model\PickupPointProviderAwareInterface;
 use Sylius\Bundle\ShippingBundle\Form\Type\ShippingMethodChoiceType;
 use Sylius\Component\Order\Context\CartContextInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;

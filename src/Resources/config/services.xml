@@ -11,6 +11,7 @@
 
         <service id="setono.sylius_pickup_point.manager.provider_manager" class="Setono\SyliusPickupPointPlugin\Manager\ProviderManager" />
 
+        <!-- Form extensions -->
         <service id="Setono\SyliusPickupPointPlugin\Form\Extension\ShippingMethodChoiceTypeExtension" public="false">
             <argument type="service" id="setono.sylius_pickup_point.manager.provider_manager" />
             <argument type="service" id="router" />
@@ -22,6 +23,10 @@
         <service id="Setono\SyliusPickupPointPlugin\Form\Extension\ShippingMethodTypeExtension" public="false">
             <argument type="service" id="setono.sylius_pickup_point.manager.provider_manager" />
             <tag name="form.type_extension" extended_type="Sylius\Bundle\ShippingBundle\Form\Type\ShippingMethodType" />
+        </service>
+
+        <service id="Setono\SyliusPickupPointPlugin\Form\Extension\ShipmentTypeExtension" public="false">
+            <tag name="form.type_extension" extended_type="Sylius\Bundle\CoreBundle\Form\Type\Checkout\ShipmentType" />
         </service>
 
         <!-- Providers -->
