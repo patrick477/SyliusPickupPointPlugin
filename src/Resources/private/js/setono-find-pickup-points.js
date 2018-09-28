@@ -30,7 +30,6 @@
                     },
                     onSuccess: function (response) {
                         addPickupPoints($container, response);
-                        console.log(response);
                     },
                     onFailure: function (response) {
                         console.log(response);

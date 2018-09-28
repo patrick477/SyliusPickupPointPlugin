@@ -26,13 +26,37 @@ class GLSProvider implements ProviderInterface
     }
 
     /**
+     * @todo create a bundle with a soap client maybe using https://github.com/phpro/soap-client
+     *
      * {@inheritdoc}
      */
     public function findPickupPoints(OrderInterface $order): array
     {
-        return [
-            new PickupPoint('id', 'Pickup Point #1', 'Address 1', '9000', 'Aalborg', 'Denmark', '123', '123'),
-            new PickupPoint('id', 'Pickup Point #2', 'Address 123', '8000', 'Aarhus', 'Denmark', '123', '123')
-        ];
+        if(null === $order->getShippingAddress()) {
+            return [];
+        }
+
+        $client = new \SoapClient('http://www.gls.dk/webservices_v4/wsShopFinder.asmx?WSDL');
+        $res = $client->SearchNearestParcelShops([
+            'street' => $order->getShippingAddress()->getStreet(),
+            'zipcode' => $order->getShippingAddress()->getPostcode(),
+            'countryIso3166A2' => $order->getShippingAddress()->getCountryCode(),
+            'Amount' => 10,
+        ]);
+
+        if(!($res instanceof \stdClass)
+            || !isset($res->SearchNearestParcelShopsResult)
+            || !isset($res->SearchNearestParcelShopsResult->parcelshops)
+            || empty($res->SearchNearestParcelShopsResult->parcelshops->PakkeshopData)
+        ) {
+            return [];
+        }
+
+        $pickupPoints = [];
+        foreach ($res->SearchNearestParcelShopsResult->parcelshops->PakkeshopData as $item) {
+            $pickupPoints[] = new PickupPoint($item->Number, $item->CompanyName, $item->Streetname, $item->ZipCode, $item->CityName, $item->CountryCodeISO3166A2, $item->Latitude, $item->Longitude);
+        }
+
+        return $pickupPoints;
     }
 }

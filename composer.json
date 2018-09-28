@@ -5,6 +5,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.1",
+        "ext-soap": "*",
 
         "sylius/sylius": "~1.2.3",
         "symfony/symfony": "^3.4|^4.1"
